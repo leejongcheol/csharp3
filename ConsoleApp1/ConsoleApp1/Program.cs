@@ -4,52 +4,28 @@ class DecimalToBinary
 {
     static void Main(string[] args)
     {
-        if (0 < args.Length)
+        int[] iArr = Array.ConvertAll(
+                         (Console.ReadLine()).Split(','),
+                         n => int.Parse(n));
+        //string[] s = Console.ReadLine().Split(',');
+        //int[] iArr2 = Array.ConvertAll(s, n => int.Parse(n));
+
+        for(int i=1; i<iArr.Length; i++)
         {
-            foreach (string arg in args)
+            for(int j=0; j < i; j++)
             {
-                printBinary(int.Parse(arg));
+                if (iArr[j] > iArr[i])
+                {
+                    int tmp = iArr[i];
+                    iArr[i] = iArr[j];
+                    iArr[j] = tmp;
+                }
             }
         }
-        else
-        {
-            Console.Write("수를 넣으시오: ");
-            printBinary(int.Parse(Console.ReadLine()));
-        }
+        for(int i=0; i < iArr.Length; i++)
+            Console.Write("{0} ", iArr[i]);        
+        Console.ReadKey();
     }
 
-    static void printBinary(int n)
-    {
-        Console.WriteLine("{0}\t--> {1}\n{2}\n", n, binary(n), bits(n));
-    }
-
-    static string binary(int n)
-    {
-        if (n == 0)
-        {
-            return "0";
-        }
-        string sign = "";
-        if (n < 0)
-        {
-            sign = "-";
-            n = -n;
-        }
-        string s = "";
-        for (; n != 0; n /= 2)
-        {
-            s = n % 2 + s;
-        }
-        return sign + s;
-    }
-
-    static string bits(int n)
-    {
-        string s = "";
-        for (uint bit = 0x80000000; bit != 0; bit >>= 1)
-        {
-            s += (n & bit) == 0 ? "0" : "1";
-        }
-        return s;
-    }
+  
 }
